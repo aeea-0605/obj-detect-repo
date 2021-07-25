@@ -1,29 +1,33 @@
 import sys, os, glob
-import numpy as np
-import cv2
+from module.module import *
+from detect_tesseract import *
 
 
-cap = cv2.VideoCapture('/Users/aeea/Desktop/git/project/side-dl-project/samples/ABLATION_1_3.mp4')
-# cap = cv2.VideoCapture('/Users/aeea/Desktop/git/project/side-dl-project/samples/ABLATION_9_4.mp4')
+path = os.getcwd()
+
+# Source Video 열기
+cap = cv2.VideoCapture('/Users/aeea/Desktop/git/project/obj-detect-repo/samples/ABLATION_9_4.mp4')
 if not cap.isOpened():
     print("Video open failed")
     sys.exit()
 
+# Source Video의 속성
 w = round(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 h = round(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+count = cap.get(cv2.CAP_PROP_FRAME_COUNT)
 fps = cap.get(cv2.CAP_PROP_FPS)
 fourcc = cv2.VideoWriter_fourcc(*'DIVX')
 delay = round(1000 / fps)
 
-out = cv2.VideoWriter('/Users/aeea/Desktop/git/project/side-dl-project/result/result_1-3.avi', fourcc, fps, (w, h))
+# 결과를 저장할 객체 생성
+out = cv2.VideoWriter('/Users/aeea/Desktop/git/project/obj-detect-repo/result/result_9-4-2.avi', fourcc, fps, (w, h))
 if not out.isOpened():
     print("out open failed!")
     sys.exit()
 
-path = os.getcwd()
+# Target Image Load
 target_dir = os.path.join(path, 'test_target_imgs')
 target_path = glob.glob(target_dir+'/*.png')
-
 target_ls = []
 for path in target_path:
     img = cv2.imread(path)
@@ -34,7 +38,8 @@ for path in target_path:
     target_ls.append(img)
 print("target image count: " ,len(target_ls))
 
-start = int(input("insert start frame number : "))
+# 시작할 Frame number 입력
+start = int(input(f"insert start frame number : 0 ~ {count} >>"))
 number = 0
 while True:
     ret, frame = cap.read()
@@ -45,26 +50,35 @@ while True:
         number += 1
         continue
 
+    # 현재 frame 그레이스케일 후 target image와 비교를 위한 demension 조정
     gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    gray_frame = np.dstack([gray_frame]*3)
+    detect_frame = np.dstack([gray_frame]*3)
 
+    # 모든 target image들과 matchTemplate후 가장 높은 value를 가진 target으로 detecting
     result = {"maxv": [], "maxloc": []}
     for i in range(len(target_ls)):
-        detect_dst = cv2.matchTemplate(gray_frame, target_ls[i], cv2.TM_CCOEFF_NORMED)
+        detect_dst = cv2.matchTemplate(detect_frame, target_ls[i], cv2.TM_CCOEFF_NORMED)
         _, maxv, _, maxloc = cv2.minMaxLoc(detect_dst)
         result["maxv"].append(maxv)
         result["maxloc"].append(maxloc)
 
     target_idx = np.argmax(result["maxv"])
     th, tw = target_ls[target_idx].shape[:2]
+    src_w, src_h = result["maxloc"][target_idx]
 
-    cv2.rectangle(gray_frame, result["maxloc"][target_idx], (result["maxloc"][target_idx][0]+tw, result["maxloc"][target_idx][1]+th), (0, 0, 255), 2)
-    
-    current_maxv = np.round(result["maxv"][target_idx], 4)
-    print(current_maxv)
-
-    cv2.imshow('src', gray_frame)
+    # 여기서 이미지 추출 > gray_frame에서 선정된 target image의 shape을 따고 그 영역에 대한 tasseract 진행
+    detecting_img = gray_frame[src_h:src_h + th, src_w:src_w + tw]
+    text = detect_text(detecting_img)
+    print(f"Detect :{text}")
+    cv2.imshow('detect_box', detecting_img)
     cv2.imshow('target', target_ls[target_idx])
+
+    cv2.rectangle(detect_frame, result["maxloc"][target_idx], (src_w+tw, src_h+th), (0, 0, 255), 2)
+    cv2.putText(detect_frame, f"{text}", (src_w+30, src_h-30), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 0, 0), 3, cv2.LINE_AA)
+    cv2.imshow("src", detect_frame)
+
+    current_maxv = np.round(result["maxv"][target_idx], 4)
+    print(f"Max Value :{current_maxv}")
 
     if current_maxv <= 0.5829:
         key = cv2.waitKey()
@@ -77,11 +91,12 @@ while True:
             make_target_img = tmp[rc[1]:rc[1]+rc[3], rc[0]:rc[0]+rc[2]]
             target_ls.append(make_target_img)
             print(len(target_ls))
-            cv2.imwrite('/Users/aeea/Desktop/git/project/side-dl-project/test_target_imgs/v2_target{}.png'.format(number), make_target_img)
+            cv2.imwrite('/Users/aeea/Desktop/git/project/obj-detect-repo/test_target_imgs/tmp_target{}.png'.format(number), make_target_img)
             cv2.destroyAllWindows()
             number += 1
             continue
         elif key == ord('s'):
+            out.write(detect_frame)
             cv2.destroyAllWindows()
             number += 1
             continue
@@ -89,7 +104,7 @@ while True:
             print(number)
             sys.exit()
 
-    out.write(gray_frame)
+    out.write(detect_frame)
 
     # key = cv2.waitKey(1000)
     key = cv2.waitKey(delay)
@@ -103,7 +118,7 @@ while True:
         tmp = np.dstack([tmp]*3)
         rc = cv2.selectROI(tmp)
         make_target_img = tmp[rc[1]:rc[1]+rc[3], rc[0]:rc[0]+rc[2]]
-        cv2.imwrite('/Users/aeea/Desktop/git/project/side-dl-project/test_target_imgs/v2_target{}.png'.format(number), make_target_img)
+        cv2.imwrite('/Users/aeea/Desktop/git/project/side-dl-project/test_target_imgs/tmp_target{}.png'.format(number), make_target_img)
         cv2.destroyAllWindows()
     elif key  == ord('s') or -1:
         cv2.destroyAllWindows()
