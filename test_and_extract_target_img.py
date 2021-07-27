@@ -45,14 +45,14 @@ while True:
     src_w, src_h = result["maxloc"][idx]
 
     # gray_frame에서 선정된 target image의 shape을 따고 그 영역에 대한 tasseract 진행
-    detecting_img = gray_frame[src_h:src_h + th, src_w:src_w + tw]
-    text = detect_text(detecting_img)
-    print(f"Detect :{text}")
-    cv2.imshow('detect_box', detecting_img)
-    cv2.imshow('target', target_ls[idx])
+    # detecting_img = gray_frame[src_h:src_h + th, src_w:src_w + tw]
+    # text = detect_text(detecting_img)
+    # print(f"Detect :{text}")
+    # cv2.imshow('detect_box', detecting_img)
+    # cv2.imshow('target', target_ls[idx])
 
     cv2.rectangle(detect_frame, result["maxloc"][idx], (src_w+tw, src_h+th), (0, 0, 255), 2)
-    cv2.putText(detect_frame, f"{text}", (src_w+30, src_h-30), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 0, 0), 3, cv2.LINE_AA)
+    # cv2.putText(detect_frame, f"{text}", (src_w+30, src_h-30), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 0, 0), 3, cv2.LINE_AA)
     cv2.imshow("src", detect_frame)
 
     max_value = np.round(result["maxv"][idx], 4)
@@ -80,7 +80,7 @@ while True:
             print(number)
             sys.exit()
 
-    key = cv2.waitKey(delay)
+    key = cv2.waitKey(info.delay)
     if key == 27:
         print("stop frame number: ", number)
         sys.exit()
