@@ -4,7 +4,7 @@ from module.module import *
 
 path = os.getcwd()
 video_dir = os.path.join(path, "samples")
-video_path = glob.glob(video_dir + "/*9_4.mp4")[0]
+video_path = glob.glob(video_dir + "/*1_3.mp4")[0]
 video_name = os.path.basename(video_path).split(".")[0]
 
 # Source Video에 대한 정보 객체 생성
