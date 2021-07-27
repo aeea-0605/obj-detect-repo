@@ -21,13 +21,11 @@ def detect_text(image, blur_size=5, h_rate=0.025, w_rate=0.065, bin_value=93.5):
     result =  re.findall("(\d+|N/A)", text)
     if "N/A" in result:
         detected_text = "N/A"
-        # print("N/A", target_names[i].split(".")[0].split("_")[0])
     elif result == []:
         detected_text = "detect failed"
-        # print("None", target_names[i].split(".")[0].split("_")[0])
     else:
         detected_text = "".join(result)
-        # print("".join(result), target_names[i].split(".")[0].split("_")[0])
+        
 
     return detected_text
 
