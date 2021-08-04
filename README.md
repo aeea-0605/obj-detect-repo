@@ -49,6 +49,8 @@ Object Detecting을 진행할 섹션
 
 - Object Detection을 위한 총 15개의 target images 생성을 통해 95% 이상의 small에 대해 detecting.
 
+<br/>
+
 ### **2-2. OCR Engine을 사용한 Text 추출**
 <img width="680" alt="스크린샷 2021-08-04 오후 5 21 16" src="https://user-images.githubusercontent.com/80459520/128189784-75c066c6-6c45-4e2f-85c5-0abb16237055.png">
 
@@ -60,6 +62,8 @@ Object Detecting을 진행할 섹션
     4. pytesseract를 사용한 TEXT 추출
     5. 정규표현식을 사용한 최종 TEXT 도출을 위한 전처리
         - TEXT를 추출 못했을 경우 'detect failed' 라는 문구 출력
+
+<br/>
 
 ### **2-3. 결과영상에 대한 Sample Video**
 ![화면-기록-2021-08-04-오후-10 45 08](https://user-images.githubusercontent.com/80459520/128192615-0ce69e87-5542-4cfe-acdd-8710d49cdcce.gif)
