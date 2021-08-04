@@ -32,6 +32,7 @@ Object Detecting을 진행할 섹션
 ### **2-1. Object Detection**
 
 <CASE 1> Yolov5
+
 <img width="608" alt="스크린샷 2021-08-04 오후 5 25 03" src="https://user-images.githubusercontent.com/80459520/128187721-c929e056-00cf-44c7-bd69-601b51a224bd.png">
 
 - 과정
@@ -43,6 +44,7 @@ Object Detecting을 진행할 섹션
 <br/>
 
 <CASE 2> OpenCV의 matchTemplate
+
 <img width="600" alt="스크린샷 2021-08-04 오후 5 26 11" src="https://user-images.githubusercontent.com/80459520/128188566-04989d90-2a40-45f6-a673-c62b07e8c85f.png">
 
 - Object Detection을 위한 총 15개의 target images 생성을 통해 95% 이상의 small에 대해 detecting.
@@ -70,13 +72,11 @@ Object Detecting을 진행할 섹션
 <br/>
 
 # 💡 제언
-```
 - Pre-trained Tesseract 모델에 감지된 small 섹션 데이터에 대한 학습을 진행한다면 좀 더 좋은 성능을 보유할 것으로 예상됩니다.
 
 - 감지된 섹션에 대해 noise 제거, 컨투어 도출, background 분리 등의 추가적인 방법을 적용한다면 좀 더 좋은 Text 추출 성능을 가질 수 있다고 생각합니다.
 
 - Big 섹션에 대해서는 small보다 배경과 Text부분의 차이가 확연한 부분도 존재하고, 그 외의 부분은 small 섹션과 비슷하기 때문에 small의 text 도출 성능이 좋아진다면 big 섹션에 대한 text 도출 성능 또한 좋을 것이라 생각합니다.
-```
 
 ---
 <br/>
