@@ -77,17 +77,16 @@ Object Detecting을 진행할 섹션
 
 # 💡 제언
 - Pre-trained Tesseract 모델에 감지된 small 섹션 데이터에 대한 학습을 진행한다면 좀 더 좋은 성능을 보유할 것으로 예상됩니다.
-
 - 감지된 섹션에 대해 noise 제거, 컨투어 도출, background 분리 등의 추가적인 방법을 적용한다면 좀 더 좋은 Text 추출 성능을 가질 수 있다고 생각합니다.
-
 - Big 섹션에 대해서는 small보다 배경과 Text부분의 차이가 확연한 부분도 존재하고, 그 외의 부분은 small 섹션과 비슷하기 때문에 small의 text 도출 성능이 좋아진다면 big 섹션에 대한 text 도출 성능 또한 좋을 것이라 생각합니다.
+- 아직 Section 감지 및 Text 도출에 있어 미진한 부분이 많기에 추후에 다양한 방법을 사용해 보완이 필요하다고 생각합니다.
 
 ---
 <br/>
 
 # Code Explanation
 - [module.py](https://github.com/aeea-0605/obj-detect-repo/blob/main/module/module.py)
-    - Input Video의 Class 및 detect secsion, detect text, make target image Function 등이 있는 모듈파일
+    - Input Video의 Class 및 detect section, detect text, make target image Function 등이 있는 모듈파일
 - [detect.py](https://github.com/aeea-0605/obj-detect-repo/blob/main/detect.py)
     - OpenCV의 matchTemplate으로 Object Detection한 뒤 tesseract로 text 추출하고 input video에 대한 결과 영상을 만드는 code
 - [Yolov5.ipynb](https://github.com/aeea-0605/obj-detect-repo/blob/main/Yolov5.ipynb)
