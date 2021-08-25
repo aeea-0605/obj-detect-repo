@@ -33,7 +33,8 @@ Object Detecting을 진행할 섹션
 
 <CASE 1> Yolov5
 
-<img width="608" alt="스크린샷 2021-08-04 오후 5 25 03" src="https://user-images.githubusercontent.com/80459520/128187721-c929e056-00cf-44c7-bd69-601b51a224bd.png">
+<해당 기업 요청으로 이미지를 비공개 처리 하였습니다.>
+
 
 - 과정
     1. OpenCV를 사용한 의료 영상에서 sample frame들을 추출한 뒤 roboflow를 통해 small, big labeling을 진행
@@ -45,14 +46,16 @@ Object Detecting을 진행할 섹션
 
 <CASE 2> OpenCV의 matchTemplate
 
-<img width="600" alt="스크린샷 2021-08-04 오후 5 26 11" src="https://user-images.githubusercontent.com/80459520/128188566-04989d90-2a40-45f6-a673-c62b07e8c85f.png">
+<해당 기업 요청으로 이미지를 비공개 처리 하였습니다.>
+
 
 - Object Detection을 위한 총 15개의 target images 생성을 통해 95% 이상의 small에 대해 detecting.
 
 <br/>
 
 ### **2-2. OCR Engine을 사용한 Text 추출**
-<img width="680" alt="스크린샷 2021-08-04 오후 5 21 16" src="https://user-images.githubusercontent.com/80459520/128189784-75c066c6-6c45-4e2f-85c5-0abb16237055.png">
+<해당 기업 요청으로 이미지를 비공개 처리 하였습니다.>
+
 
 - 2-1의 CASE 2에서 detected small 섹션에 대해 Tesseract와 regex를 통해 Text 추출을 진행.
 - 과정
@@ -66,7 +69,7 @@ Object Detecting을 진행할 섹션
 <br/>
 
 ### **2-3. 결과영상에 대한 Sample Video**
-![화면-기록-2021-08-04-오후-10 45 08](https://user-images.githubusercontent.com/80459520/128192615-0ce69e87-5542-4cfe-acdd-8710d49cdcce.gif)
+<해당 기업 요청으로 동영상을 비공개 처리 하였습니다.>
 
 - **RED SECTION** : OpenCV matchTemplate를 통해 감지한 small 섹션
 - **BLUE TEXT** : tesseract, regex를 통해 추출한 최종 text
